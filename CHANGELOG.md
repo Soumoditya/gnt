@@ -15,6 +15,8 @@ or `0.5.5` publish.
 
 ### Added
 
+- Documentation for the `gnt org`, `gnt billing`, and `gnt stale` CLI
+  commands, including current behavior, examples, and follow-up actions.
 - `./demo.sh` provides a Docker-only, seeded `check_action` evaluation path
   with an isolated Compose project and a ready-to-copy curl request.
 - Runnable LangChain, Vercel AI SDK, and Anthropic tool-use examples that call `check_action`
