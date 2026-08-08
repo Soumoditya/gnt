@@ -20,6 +20,9 @@ or `0.5.5` publish.
 - `gnt status` and `gnt gaps` now accept a `--json` flag that prints the
   same data as machine-readable JSON instead of the human-formatted output,
   for scripting a CI gate or dashboard around either command.
+- New starter pack: `content-moderation-brand-safety`, covering unverified
+  claims, competitor disparagement, off-brand tone, legal-sensitive topics,
+  and silent edits/deletions on public or customer-facing posts.
 - New starter pack: `open-source-license-compliance`, covering license checks
   on new dependencies, copyleft escalation, unlicensed code, third-party
   attribution and notices, and centralized license tracking.
