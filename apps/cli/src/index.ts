@@ -4,6 +4,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Command } from "commander";
 import { billing } from "./commands/billing.js";
+import { completion } from "./commands/completion.js";
 import { connectAirtable, disconnectAirtable } from "./commands/connect-airtable.js";
 import { connectDatadog, disconnectDatadog } from "./commands/connect-datadog.js";
 import { connectFigma, disconnectFigma } from "./commands/connect-figma.js";
@@ -30,7 +31,9 @@ import {
   disconnectSentryMcp,
   disconnectZoomMcp,
 } from "./commands/disconnect-mcp.js";
+import { doctor } from "./commands/doctor.js";
 import { gaps } from "./commands/gaps.js";
+import { init } from "./commands/init.js";
 import { createKey, listKeys, revokeKey, rotateKey } from "./commands/keys.js";
 import { login } from "./commands/login.js";
 import { logout } from "./commands/logout.js";
@@ -38,6 +41,7 @@ import { orgInvite, orgRemove, orgRename, orgShow } from "./commands/org.js";
 import { prebrain } from "./commands/prebrain.js";
 import { pull } from "./commands/pull.js";
 import { review } from "./commands/review.js";
+import { rulesLint } from "./commands/rules-lint.js";
 import { stale } from "./commands/stale.js";
 import { status } from "./commands/status.js";
 import { createWebhookToken, listWebhookTokens, revokeWebhookToken } from "./commands/webhook.js";
@@ -65,6 +69,12 @@ program
 
 program.command("login").description("Sign in and store an API key locally").action(login);
 program.command("logout").description("Remove the locally stored API key").action(logout);
+
+program
+  .command("init")
+  .description("Scaffold a local rules/ directory with example rule files")
+  .option("--dir <path>", "Directory to scaffold rules/ into (defaults to the current directory)")
+  .action((options: { dir?: string }) => init(options));
 
 const connect = program.command("connect").description("Connect an app to your brain");
 connect.command("slack").description("Connect a Slack workspace").action(connectSlack);
@@ -188,7 +198,17 @@ disconnect
   .description("Remove the locally stored Airtable token, base, and field selection")
   .action(disconnectAirtable);
 
-program.command("status").description("Show brain status").action(status);
+program
+  .command("status")
+  .description("Show brain status")
+  .option("--json", "Print machine-readable JSON instead of the human-readable summary")
+  .action(status);
+program
+  .command("doctor")
+  .description("Diagnose local setup, login, API, and rules-repo connectivity")
+  .action(async () => {
+    if (!(await doctor())) process.exitCode = 1;
+  });
 
 program
   .command("billing")
@@ -208,6 +228,7 @@ program
 program
   .command("gaps")
   .description("List uncovered queries with no approved rule")
+  .option("--json", "Print machine-readable JSON instead of the human-readable list")
   .action(gaps);
 
 program
@@ -381,6 +402,12 @@ program
   .description("List approved rules due for re-validation")
   .action(stale);
 
+const rules = program.command("rules").description("Work with local rule files");
+rules
+  .command("lint [path]")
+  .description("Validate rule frontmatter shape locally, before a PR round-trip (defaults to ./rules)")
+  .action(rulesLint);
+
 const keys = program.command("keys").description("Manage MCP keys used by agents");
 keys.command("list").description("List MCP keys").action(listKeys);
 keys
@@ -412,6 +439,11 @@ org
   .option("--role <role>", 'Role to invite them as: "member" or "admin"', "member")
   .action(orgInvite);
 org.command("remove <email>").description("Remove someone from the organization").action(orgRemove);
+
+program
+  .command("completion <shell>")
+  .description("Print a completion script for bash, zsh, or fish -- eval it in your shell's rc file")
+  .action((shell: string) => completion(shell, program));
 
 function describeUnknownError(err: unknown): string {
   if (err instanceof Error) return err.message;
