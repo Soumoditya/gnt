@@ -2,6 +2,10 @@
 
 ## Dev setup
 
+Prerequisites: Node >=22.13, [pnpm](https://pnpm.io/installation) 11.10.0 (`corepack enable`
+picks it up from `packageManager` in `package.json`), plus [uv](https://docs.astral.sh/uv/) for
+`apps/api` and [bun](https://bun.sh) for `apps/store`.
+
 ```bash
 git clone https://github.com/gnt-ai/gnt
 cd gnt

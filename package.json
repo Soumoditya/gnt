@@ -1,6 +1,7 @@
 {
   "name": "gnt-ai",
   "description": "Checks every AI agent action against your company's real rules before it runs. Git-native, PR-reviewed.",
+  "homepage": "https://docs.gntai.dev",
   "repository": {
     "type": "git",
     "url": "https://github.com/gnt-ai/gnt.git"
@@ -22,7 +23,7 @@
     "clip": "./scripts/clip.sh"
   },
   "devDependencies": {
-    "turbo": "^2.10.8"
+    "turbo": "^2.3.0"
   },
   "packageManager": "pnpm@11.10.0",
   "engines": {
