@@ -15,6 +15,9 @@ or `0.5.5` publish.
 
 ### Added
 
+- `gnt doctor` checks the local Node version, login credentials, API
+  reachability, GitHub rules-repo connection, and common self-host `.env`
+  mistakes in one pass.
 - Documentation for the `gnt org`, `gnt billing`, and `gnt stale` CLI
   commands, including current behavior, examples, and follow-up actions.
 - `./demo.sh` provides a Docker-only, seeded `check_action` evaluation path

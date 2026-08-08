@@ -30,6 +30,7 @@ import {
   disconnectSentryMcp,
   disconnectZoomMcp,
 } from "./commands/disconnect-mcp.js";
+import { doctor } from "./commands/doctor.js";
 import { gaps } from "./commands/gaps.js";
 import { init } from "./commands/init.js";
 import { createKey, listKeys, revokeKey, rotateKey } from "./commands/keys.js";
@@ -201,6 +202,12 @@ program
   .description("Show brain status")
   .option("--json", "Print machine-readable JSON instead of the human-readable summary")
   .action(status);
+program
+  .command("doctor")
+  .description("Diagnose local setup, login, API, and rules-repo connectivity")
+  .action(async () => {
+    if (!(await doctor())) process.exitCode = 1;
+  });
 
 program
   .command("billing")
