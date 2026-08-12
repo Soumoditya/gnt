@@ -25,6 +25,12 @@ extensions:
       - GNT_MCP_KEY
     envs: {}
     timeout: 300
+    available_tools:
+      - check_action
+      - search_rules
+      - get_rule
+      - list_skill_packs
+      - get_skill_pack
 ```
 
 Keep the trailing slash in the MCP URL. Goose resolves each name in `env_keys` from the matching
@@ -38,6 +44,18 @@ environment as the secret source, make the key available to the process that sta
 
 ```bash
 export GNT_MCP_KEY="gnt_live_..."
+```
+
+PowerShell:
+
+```powershell
+$env:GNT_MCP_KEY = "gnt_live_..."
+```
+
+Command Prompt (`cmd.exe`):
+
+```bat
+set "GNT_MCP_KEY=gnt_live_..."
 ```
 
 Do not commit the key or paste it into `config.yaml`, a project hint file, an issue, or a log. If
@@ -63,6 +81,18 @@ at this file:
 export GOOSE_MOIM_MESSAGE_FILE="$PWD/integrations/goose/TOOLS.md"
 ```
 
+PowerShell:
+
+```powershell
+$env:GOOSE_MOIM_MESSAGE_FILE = Join-Path $PWD "integrations/goose/TOOLS.md"
+```
+
+Command Prompt (`cmd.exe`):
+
+```bat
+set "GOOSE_MOIM_MESSAGE_FILE=%CD%\integrations\goose\TOOLS.md"
+```
+
 The persistent-instructions option is useful when the `check_action` requirement should be
 injected on every turn. If Goose is launched from its desktop app, make sure these environment
 variables are available to the app process, or use `.goosehints` instead.
@@ -74,5 +104,7 @@ enabled and that its tools are listed. Before asking Goose to perform an action 
 side effect, verify that it calls `check_action` first and follows the returned verdict. A missing
 or unclear verdict is not permission to continue.
 
-If the extension does not load, check the YAML indentation and confirm that `GNT_MCP_KEY` is set in
-the environment inherited by Goose. Do not put the raw key in a bug report while troubleshooting.
+If the extension does not load, check the YAML indentation and confirm that `GNT_MCP_KEY` is available
+either in the environment inherited by Goose or in Goose's configured secret storage. Goose checks the
+inherited environment first, then falls back to secret storage for names listed under `env_keys`. Do not
+put the raw key in a bug report while troubleshooting.

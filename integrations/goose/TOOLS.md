@@ -11,6 +11,12 @@ gnt-brain exposes `check_action`, `search_rules`, `get_rule`, `list_skill_packs`
 Before any action that sends a message, moves money, deletes data, or is otherwise hard to undo,
 call `check_action` first with a plain-English description of what you are about to do.
 
+This file is an instruction for Goose; it is not an enforcement boundary by itself. The client or
+action executor that performs the side effect must reject a call without an `allowed` verdict for
+the exact action. Bind that approval to the recipient, amount, target, and scope, and run a fresh
+check if any of those details change. Never reuse a verdict from a different action or an earlier
+request.
+
 - If the verdict is `allowed`, proceed with the action.
 - If the verdict is `blocked`, do not proceed. Tell the user why and cite the rule returned by
   gnt-brain.
