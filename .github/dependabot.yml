@@ -22,16 +22,12 @@ updates:
           - "minor"
           - "patch"
 
-  - package-ecosystem: "npm"
-    directory: "/apps/store"
-    schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 5
-    groups:
-      minor-and-patch:
-        update-types:
-          - "minor"
-          - "patch"
+  # apps/store is bun-native (its own bun.lock, excluded from the pnpm
+  # workspace) -- Dependabot has no "bun" ecosystem, so an "npm" entry here
+  # bumps package.json but can't regenerate bun.lock, which breaks CI on
+  # every PR it opens (frozen-lockfile mismatch, e.g. #134). Removed rather
+  # than pointed at an ecosystem that doesn't exist; deps here stay on
+  # manual `bun update` until Dependabot ships Bun support.
 
   - package-ecosystem: "github-actions"
     directory: "/"
