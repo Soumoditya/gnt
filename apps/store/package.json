@@ -22,7 +22,7 @@
   "devDependencies": {
     "@eslint/js": "^10",
     "@types/bun": "^1.2.0",
-    "@types/js-yaml": "^3",
+    "@types/js-yaml": "^4",
     "eslint": "^10",
     "typescript": "^5",
     "typescript-eslint": "^8"
