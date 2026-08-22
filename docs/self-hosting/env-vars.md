@@ -158,7 +158,8 @@ closed (every call between the two services rejected), not open.
 
 Hand-enumerated from the actual `process.env.X` reads in
 `apps/store/src/http/server.ts`, `apps/store/src/native/embed.ts`, and
-`apps/store/src/native/rerank.ts` — not from `.env.example`.
+`apps/store/src/native/rerank.ts`; the example file mirrors the deployable
+variables below.
 
 | Env var | Required | Default | Notes |
 |---|---|---|---|
