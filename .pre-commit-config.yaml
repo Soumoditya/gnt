@@ -1,0 +1,15 @@
+repos:
+  - repo: local
+    hooks:
+      - id: eslint
+        name: eslint (TypeScript apps)
+        entry: pnpm exec eslint
+        language: system
+        files: ^apps/(cli|store)/.*\.(c|m)?[jt]sx?$
+        types: [file]
+      - id: ruff
+        name: ruff (API)
+        entry: uv run --project apps/api ruff check
+        language: system
+        files: ^apps/api/.*\.py$
+        types: [python]
