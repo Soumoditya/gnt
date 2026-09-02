@@ -213,6 +213,7 @@ program
 program
   .command("billing")
   .description("Subscribe or manage your subscription")
+  .option("--json", "Print machine-readable JSON instead of opening a browser")
   .action(billing);
 
 program
