@@ -465,7 +465,7 @@ program
 function describeUnknownError(err: unknown): string {
   if (err instanceof Error) return err.message;
   if (typeof err === "string") return err;
-  // A thrown plain object (e.g. { status, detail } from a rejected fetch
+  // A thrown plain object (e.g. {status, detail} from a rejected fetch
   // helper) has useful fields String(err) would flatten to
   // "[object Object]" — stringify it instead so they survive.
   try {
